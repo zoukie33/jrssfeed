@@ -7,6 +7,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +21,6 @@ public class RegisterActivity extends AppCompatActivity {
     private Button gotoLoginBut;
     private Button registerBut;
     private EditText email;
-    private EditText username;
     private EditText password;
     private EditText password2;
     ApiInterface api;
@@ -31,7 +31,6 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         gotoLoginBut = (Button) findViewById(R.id.goto_login_but);
         registerBut = (Button) findViewById(R.id.register_but);
-        username = (EditText) findViewById(R.id.Register_Username_input);
         password = (EditText) findViewById(R.id.Register_Password_input);
         password2 = (EditText) findViewById(R.id.Register_Password2_input);
         email = (EditText) findViewById(R.id.Register_Email_input);
@@ -40,24 +39,22 @@ public class RegisterActivity extends AppCompatActivity {
         gotoLoginBut.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                String user = username.getText().toString();
-                String pass = password.getText().toString();
-                String pass2 = password2.getText().toString();
-                String mail = email.getText().toString();
-                register(user, pass, pass2, mail);
-
+                openActivityLogin();
             }
         });
         registerBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // openActivityRegister();
+                String pass = password.getText().toString();
+                String pass2 = password2.getText().toString();
+                String mail = email.getText().toString();
+                register(pass, pass2, mail);
             }
         });
     }
 
     public void openActivityLogin() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
     public void openActivityRegister() {
@@ -65,17 +62,21 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void register(String username, String password, String password2, String email) {
-        if (password == password2) {
-            Call<Auth> callReg = api.signupUser(username, password, email);
+    public void register(String password, String password2, String email) {
+        Log.d("Pass1", "Password1: " + password);
+        Log.d("pass2", "Password2: " + password2);
+        if (password.equals(password2)) {
+            Call<Auth> callReg = api.signupUser(password, password2, email);
             callReg.enqueue(new Callback<Auth>() {
                 @Override
                 public void onResponse(Call<Auth> call, Response<Auth> response) {
-
+                    Log.d("Res", "Response: " + response.toString());
                 }
 
                 @Override
                 public void onFailure(Call<Auth> call, Throwable t) {
+
+                    Log.d("Res", "Bad Response: " + t.toString());
                     call.cancel();
                 }
             });

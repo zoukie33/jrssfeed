@@ -18,7 +18,7 @@ public class ApiCli {
 
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://reqres.in")
+                .baseUrl("http://54.38.233.29:8080")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
