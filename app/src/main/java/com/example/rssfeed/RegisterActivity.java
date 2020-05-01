@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.rssfeed.API.ApiCli;
 import com.example.rssfeed.API.ApiInterface;
-import com.example.rssfeed.API.res.Auth;
 
 public class RegisterActivity extends AppCompatActivity {
     private Button gotoLoginBut;
@@ -66,15 +65,15 @@ public class RegisterActivity extends AppCompatActivity {
         Log.d("Pass1", "Password1: " + password);
         Log.d("pass2", "Password2: " + password2);
         if (password.equals(password2)) {
-            Call<Auth> callReg = api.signupUser(password, password2, email);
-            callReg.enqueue(new Callback<Auth>() {
+            Call<Void> callReg = api.signupUser(password, password2, email);
+            callReg.enqueue(new Callback<Void>() {
                 @Override
-                public void onResponse(Call<Auth> call, Response<Auth> response) {
+                public void onResponse(Call<Void> call, Response<Void> response) {
                     Log.d("Res", "Response: " + response.toString());
                 }
 
                 @Override
-                public void onFailure(Call<Auth> call, Throwable t) {
+                public void onFailure(Call<Void> call, Throwable t) {
 
                     Log.d("Res", "Bad Response: " + t.toString());
                     call.cancel();

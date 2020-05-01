@@ -3,6 +3,7 @@ package com.example.rssfeed;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button gotoRegisterBut;
     private EditText email;
     private EditText password;
-    ApiInterface api;
+    private ApiInterface api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.Email_input);
         password = (EditText) findViewById(R.id.Password_input);
         api = ApiCli.getClient().create(ApiInterface.class);
+        SharedPreferences sharedPref = getSharedPreferences("mySession", MODE_PRIVATE);
+        String mySetting = sharedPref.getString("mySession", null);
 
         loginBut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void openActivityLogin() {
+    public void onLoginOpenActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -62,32 +65,41 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void login(String email, String password) {
-        Call<Auth> callReg = api.loginUser(email, password);
-        callReg.enqueue(new Callback<Auth>() {
+        Call<Void> callReg = api.loginUser(email, password);
+        callReg.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Auth> call, Response<Auth> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(LoginActivity.this, "Code: "+response.code(),
                             Toast.LENGTH_LONG).show();
                     return;
                 }
-                response.headers().get("Set-Cookie");
-                Response<Auth> saveRes = response;
-                List<String> Cookielist = saveRes.headers().values("Set-Cookie");
+
+                Response<Void> saveRes = response;
+                /*List<String> Cookielist = saveRes.headers().values("Set-Cookie");
                 String myCookie = (Cookielist.get(0).split(";"))[0];
                 Log.d("Response code:", "===========" + saveRes.code());
 
                 Log.d("==Cookie==1===", "==="+myCookie);
                 Log.d("==Cookie==2==", "==="+saveRes.headers().get("Set-Cookie"));
-                Log.d("==Content-Type====", "==="+saveRes.headers().get("Content-Type"));
+                Log.d("==Content-Type====", "==="+saveRes.headers().get("Content-Type"));*/
+                SharedPreferences sharedPref = getSharedPreferences("mySession", MODE_PRIVATE);
 
-                Toast.makeText(LoginActivity.this, "Res: "+myCookie,
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("mySession", saveRes.headers().get("Set-Cookie"));
+                editor.commit();
+
+                Toast.makeText(LoginActivity.this, "LOGED IN",
                         Toast.LENGTH_LONG).show();
+                onLoginOpenActivity();
             }
 
             @Override
-            public void onFailure(Call<Auth> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 call.cancel();
+                Toast.makeText(LoginActivity.this, "FAILED CALL",
+                        Toast.LENGTH_LONG).show();
+                Log.d("==ERR CALL==", "==="+ t.toString());
             }
         });
     }
