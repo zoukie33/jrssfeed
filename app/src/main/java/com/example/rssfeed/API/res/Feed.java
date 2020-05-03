@@ -1,37 +1,64 @@
 package com.example.rssfeed.API.res;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 
-public class Feed implements Serializable {
+public class Feed implements Serializable, Parcelable {
     @SerializedName("author")
     private String author;
     @SerializedName("link")
     private String link;
-    @SerializedName("foreignMarkup")
-    private String foreignMarkup;
-    @SerializedName("categories")
-    private String categories;
     @SerializedName("title")
     private String title;
-    @SerializedName("enclosures")
-    private String enclosures;
     @SerializedName("pubDate")
     private String pubDate;
-    @SerializedName("modules")
-    private String modules;
 
-    public Feed(String author, String link, String foreignMarkup, String categories, String title, String enclosures, String pubDate, String modules) {
-        this.author = author;
-        this.link = link;
-        this.foreignMarkup = foreignMarkup;
-        this.categories = categories;
-        this.title = title;
-        this.enclosures = enclosures;
-        this.pubDate = pubDate;
-        this.modules = modules;
+    public Feed(String author, String link, String title, String pubDate) {
+        if (author.isEmpty()) {
+            this.author = "n/a";
+        } else {
+            this.author = author;
+        }
+        if (link.isEmpty()) {
+            this.link = "n/a";
+        } else {
+            this.link = link;
+        }
+        if (title.isEmpty()) {
+            this.title = "n/a";
+        } else {
+            this.title = title;
+        }
+        if (pubDate.isEmpty()) {
+            this.pubDate = "n/a";
+        } else {
+            this.pubDate = pubDate;
+        }
     }
+
+    protected Feed(Parcel in) {
+        author = in.readString();
+        link = in.readString();
+        title = in.readString();
+        pubDate = in.readString();
+    }
+
+    public static final Creator<Feed> CREATOR = new Creator<Feed>() {
+        @Override
+        public Feed createFromParcel(Parcel in) {
+            return new Feed(in);
+        }
+
+        @Override
+        public Feed[] newArray(int size) {
+            return new Feed[size];
+        }
+    };
 
     public String getAuthor() {
         return author;
@@ -49,36 +76,12 @@ public class Feed implements Serializable {
         this.link = link;
     }
 
-    public String getForeignMarkup() {
-        return foreignMarkup;
-    }
-
-    public void setForeignMarkup(String foreignMarkup) {
-        this.foreignMarkup = foreignMarkup;
-    }
-
-    public String getCategories() {
-        return categories;
-    }
-
-    public void setCategories(String categories) {
-        this.categories = categories;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getEnclosures() {
-        return enclosures;
-    }
-
-    public void setEnclosures(String enclosures) {
-        this.enclosures = enclosures;
     }
 
     public String getPubDate() {
@@ -89,12 +92,18 @@ public class Feed implements Serializable {
         this.pubDate = pubDate;
     }
 
-    public String getModules() {
-        return modules;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setModules(String modules) {
-        this.modules = modules;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(pubDate);
+        dest.writeString(author);
+        dest.writeString(title);
+        dest.writeString(link);
+
     }
 
 }

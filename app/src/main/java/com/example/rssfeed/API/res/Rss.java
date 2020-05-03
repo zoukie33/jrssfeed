@@ -14,8 +14,16 @@ public class Rss implements Serializable {
     private ArrayList<Feed> items;
 
     public Rss(String description, String title, ArrayList<Feed> items){
-        this.description = description;
-        this.title = title;
+        if (description.isEmpty() || description == "") {
+            this.description = "n/a";
+        } else {
+            this.description = description;
+        }
+        if (title.isEmpty() || title == "") {
+            this.title = "n/a";
+        } else {
+            this.title = title;
+        }
         this.items = items;
     }
 
@@ -24,14 +32,22 @@ public class Rss implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        if (description.isEmpty() || description == "") {
+            this.description = "n/a";
+        } else {
+            this.description = description;
+        }
     }
     public String getTitle() {
-        return description;
+        return title;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        if (title.isEmpty() || title == "") {
+            this.title = "n/a";
+        } else {
+            this.title = title;
+        }
     }
     public ArrayList<Feed> getItems() {
         return items;

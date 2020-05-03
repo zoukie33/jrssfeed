@@ -56,6 +56,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        Log.d("GoBack", "Nope stay here.");
+    }
+
     public void onLoginOpenActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -76,19 +81,10 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 Response<Void> saveRes = response;
-                /*List<String> Cookielist = saveRes.headers().values("Set-Cookie");
-                String myCookie = (Cookielist.get(0).split(";"))[0];
-                Log.d("Response code:", "===========" + saveRes.code());
-
-                Log.d("==Cookie==1===", "==="+myCookie);
-                Log.d("==Cookie==2==", "==="+saveRes.headers().get("Set-Cookie"));
-                Log.d("==Content-Type====", "==="+saveRes.headers().get("Content-Type"));*/
                 SharedPreferences sharedPref = getSharedPreferences("mySession", MODE_PRIVATE);
-
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("mySession", saveRes.headers().get("Set-Cookie"));
                 editor.commit();
-
                 Toast.makeText(LoginActivity.this, "LOGED IN",
                         Toast.LENGTH_LONG).show();
                 onLoginOpenActivity();

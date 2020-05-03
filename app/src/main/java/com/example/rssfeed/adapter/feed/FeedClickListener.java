@@ -1,4 +1,4 @@
-package com.example.rssfeed.adapter;
+package com.example.rssfeed.adapter.feed;
 
 import com.example.rssfeed.API.res.Feed;
 

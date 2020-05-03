@@ -52,6 +52,12 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+
+    @Override
+    public void onBackPressed() {
+        Log.d("GoBack", "Nope stay here.");
+    }
+
     public void openActivityLogin() {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);

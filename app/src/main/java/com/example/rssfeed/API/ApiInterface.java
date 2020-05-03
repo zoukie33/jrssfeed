@@ -1,17 +1,11 @@
 package com.example.rssfeed.API;
-import com.example.rssfeed.API.res.Auth;
-import com.example.rssfeed.API.res.Rss;
+import com.example.rssfeed.API.res.Feeds;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -26,7 +20,16 @@ public interface ApiInterface {
     // authed routes
 
     @POST("/rss")
-    Call<Rss> getRssFeed(@Header("Cookie") String cookieSession);
+    Call<Feeds> getRssFeed(@Header("Cookie") String cookieSession);
+
+    @POST("/addFeed")
+    Call<Void> addFeed(@Header("Cookie") String cookieSession, @Query("feed") String feed);
+
+    @POST("/rmFeed")
+    Call<Void> delFeed(@Header("Cookie") String cookieSession, @Query("feed") String feed);
+
+    @POST("/deleteAccount")
+    Call<Void> delAccount(@Header("Cookie") String cookieSession);
 
     /*@POST("/addFeed?feed=<feed link>")
     Call<UserList> doCreateUserWithField(@Field("name") String name, @Field("job") String job);*/

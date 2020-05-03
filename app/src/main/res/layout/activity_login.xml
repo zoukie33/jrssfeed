@@ -39,8 +39,8 @@
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="Username" />
+                    android:inputType="textEmailAddress"
+                    android:text="" />
 
             </LinearLayout>
 

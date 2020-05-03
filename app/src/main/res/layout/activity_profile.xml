@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/label_AddFeed"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="Ajouter un feed (url)"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/input_addFeed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="@android:string/copyUrl" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+
+                <Button
+                    android:id="@+id/btn_addFeed"
+                    android:layout_width="41dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Ajouter" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="413dp"
+            android:layout_height="134dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/label_DelFeed"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:text="Supprimer un feed (url)"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="93dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/input_delFeed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="@android:string/copyUrl" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+
+                <Button
+                    android:id="@+id/btn_delFeed"
+                    android:layout_width="41dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Supprimer" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="311dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_delete_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Supprimer mon compte" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
